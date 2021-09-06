@@ -1,0 +1,44 @@
+{
+  "name": "dayone2md",
+  "version": "0.0.1",
+  "description": "Dump dayone posts to dirs and md files",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "dayone2md": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=14 <15"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agreatfool/dayone2md.git"
+  },
+  "keywords": [
+    "Dayone"
+  ],
+  "author": "Jonathan Dai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/agreatfool/dayone2md/issues"
+  },
+  "homepage": "https://github.com/agreatfool/dayone2md#readme",
+  "devDependencies": {
+    "@types/node": "^16.7.2",
+    "@types/sqlite3": "^3.1.7",
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
+    "@typescript-eslint/parser": "^4.30.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.3.2",
+    "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "commander": "^8.1.0",
+    "dayjs": "^1.10.6",
+    "sqlite3": "^5.0.2"
+  }
+}
