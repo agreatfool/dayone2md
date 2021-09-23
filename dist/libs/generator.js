@@ -27,6 +27,7 @@ class Generator {
         this._postAssetsDir = '';
         this._frontmatter = '';
         this._markdown = '';
+        this._tags = '';
     }
     execute(result) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -36,6 +37,7 @@ class Generator {
             yield this._genPostDir();
             this._frontmatter = this._genFrontmatter();
             this._markdown = yield this._genOutputMarkdown();
+            this._tags = yield this._genTagsStr();
             yield this._genMarkdownFile();
         });
     }
@@ -114,6 +116,9 @@ class Generator {
             return markdown.join('\n');
         });
     }
+    _genTagsStr() {
+        return this._result.tags.join(' ');
+    }
     _genOutputMdImage(image) {
         return __awaiter(this, void 0, void 0, function* () {
             const source = LibPath.join(const_1.DAYONE_PHOTO_PATH, image.dayoneFileName);
@@ -165,7 +170,7 @@ class Generator {
     _genMarkdownFile() {
         return __awaiter(this, void 0, void 0, function* () {
             const filePath = LibPath.join(this._postDir, this._result.frontmatter.slug + '.md');
-            yield LibFs.writeFile(filePath, this._frontmatter + '\n' + this._markdown);
+            yield LibFs.writeFile(filePath, this._frontmatter + '\n' + this._markdown + '\n' + this._tags);
         });
     }
 }

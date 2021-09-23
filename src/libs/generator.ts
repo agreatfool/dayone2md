@@ -17,6 +17,7 @@ export class Generator {
   private _postAssetsDir: string; // absolute path: /Users/Jonathan/vault/base/Notes/2020/09/20200911-test-slug/assets
   private _frontmatter: string;
   private _markdown: string;
+  private _tags: string;
 
   constructor() {
     this._dest = '';
@@ -25,6 +26,7 @@ export class Generator {
     this._postAssetsDir = '';
     this._frontmatter = '';
     this._markdown = '';
+    this._tags = '';
   }
 
   public async execute(result: ResData): Promise<void> {
@@ -34,6 +36,7 @@ export class Generator {
     await this._genPostDir();
     this._frontmatter = this._genFrontmatter();
     this._markdown = await this._genOutputMarkdown();
+    this._tags = await this._genTagsStr();
     await this._genMarkdownFile();
   }
 
@@ -116,6 +119,10 @@ export class Generator {
     return markdown.join('\n');
   }
 
+  private _genTagsStr(): string {
+    return this._result.tags.join(' ');
+  }
+
   private async _genOutputMdImage(image: ResMarkdownImage): Promise<string> {
     const source = LibPath.join(DAYONE_PHOTO_PATH, image.dayoneFileName);
     const dest = LibPath.join(this._postAssetsDir, image.newFileName);
@@ -167,6 +174,6 @@ export class Generator {
 
   private async _genMarkdownFile(): Promise<void> {
     const filePath = LibPath.join(this._postDir, this._result.frontmatter.slug + '.md');
-    await LibFs.writeFile(filePath, this._frontmatter + '\n' + this._markdown);
+    await LibFs.writeFile(filePath, this._frontmatter + '\n' + this._markdown + '\n' + this._tags);
   }
 }
