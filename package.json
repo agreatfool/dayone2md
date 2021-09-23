@@ -1,6 +1,6 @@
 {
   "name": "@agreatfool/dayone2md",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Dump dayone posts to dirs and markdown files",
   "main": "dist/index.js",
   "scripts": {
