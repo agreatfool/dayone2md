@@ -53,17 +53,17 @@ class MarkdownHandler extends handler_1.Handler {
         }
     }
     _genSlugFromTitle(title) {
-        const connectWithDash = function (str) {
-            return str.replace(/\s+/g, '-');
+        const formatSlug = function (str) {
+            return str.replace(/\/+/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
         };
         if (!util_1.isStringContainsCn(title)) {
-            return connectWithDash(title.toLowerCase());
+            return formatSlug(title.toLowerCase());
         }
         if (this._mapping.has(title)) {
             return this._mapping.get(title);
         }
         console.log(`UNEXPECTED: No slug mapping found for title: ${title}`);
-        return connectWithDash(title.toLowerCase());
+        return formatSlug(title.toLowerCase());
     }
     _saveMarkdownParagraph(type, content) {
         this._markdown.paragraphs.push({

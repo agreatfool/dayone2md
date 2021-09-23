@@ -93,7 +93,7 @@ describe('generator.ts', function () {
       location.longitude = 123.123;
       location.address = 'address';
       location.placename = 'placename';
-      location.district = 'district';
+      location.district = null;
       location.city = 'city';
       location.province = 'province';
       location.country = 'country';
@@ -123,7 +123,7 @@ describe('generator.ts', function () {
           '  longitude: 123.123',
           '  address: "address"',
           '  placename: "placename"',
-          '  district: "district"',
+          '  district: null',
           '  city: "city"',
           '  province: "province"',
           '  country: "country"',
@@ -131,6 +131,7 @@ describe('generator.ts', function () {
           '  temperature: 26',
           '  humidity: 50',
           '  weather: "good"',
+          '  time: "22:52:00"',
           '  aqi: 33',
           '---',
           ''
@@ -246,18 +247,21 @@ describe('generator.ts', function () {
       generator['_postDir'] = postDir;
       await mkdirp(postDir);
       const res = new ResData();
+      res.tags = ['#Y2020', '#M202008', '#M08'];
       res.frontmatter.slug = 'title-of-the-post';
       generator['_result'] = res;
       const frontmatter = ['---', 'first', 'next', '---', ''].join('\n');
       generator['_frontmatter'] = frontmatter;
       const markdown = ['# Title of the post', '', 'some content'].join('\n');
       generator['_markdown'] = markdown;
+      const _genTagsStr = generator['_genTagsStr'].bind(generator);
+      generator['_tags'] = _genTagsStr();
 
       const _genMarkdownFile = generator['_genMarkdownFile'].bind(generator);
       await _genMarkdownFile();
       const mdPath = LibPath.join(postDir, res.frontmatter.slug + '.md');
       expect((await LibFs.stat(mdPath)).isFile());
-      expect((await LibFs.readFile(mdPath)).toString()).to.be.equal(frontmatter + '\n' + markdown);
+      expect((await LibFs.readFile(mdPath)).toString()).to.be.equal(frontmatter + '\n' + markdown + '\n\n' + '#Y2020 #M202008 #M08');
     });
   });
 });

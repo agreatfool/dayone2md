@@ -145,6 +145,11 @@ describe('90.markdown.handler.ts', function () {
       const _genSlugFromTitle = handler['_genSlugFromTitle'].bind(handler);
       expect(_genSlugFromTitle('Abc  123 gOOd')).to.be.equal('abc-123-good');
     });
+    it('should be good with slash', function () {
+      const handler = initHandler();
+      const _genSlugFromTitle = handler['_genSlugFromTitle'].bind(handler);
+      expect(_genSlugFromTitle('some-/-slash---in--the-/title')).to.be.equal('some-slash-in-the-title');
+    });
     it('should be good with chinese cases', function () {
       const handler = initHandler({
         mapping: {

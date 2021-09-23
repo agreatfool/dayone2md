@@ -74,17 +74,17 @@ export class Generator {
       `  altitude: ${fm.location.altitude}`,
       `  latitude: ${fm.location.latitude}`,
       `  longitude: ${fm.location.longitude}`,
-      `  address: "${fm.location.address}"`,
-      `  placename: "${fm.location.placename}"`,
-      `  district: "${fm.location.district}"`,
-      `  city: "${fm.location.city}"`,
-      `  province: "${fm.location.province}"`,
-      `  country: "${fm.location.country}"`,
+      `  address: ${fm.location.address ? '"' + fm.location.address + '"' : null}`,
+      `  placename: ${fm.location.placename ? '"' + fm.location.placename + '"' : null}`,
+      `  district: ${fm.location.district ? '"' + fm.location.district + '"' : null}`,
+      `  city: ${fm.location.city ? '"' + fm.location.city + '"' : null}`,
+      `  province: ${fm.location.province ? '"' + fm.location.province + '"' : null}`,
+      `  country: ${fm.location.country ? '"' + fm.location.country + '"' : null}`,
       `weather:`,
       `  temperature: ${fm.weather.temperature}`,
       `  humidity: ${fm.weather.humidity}`,
-      `  weather: "${fm.weather.weather}"`,
-      `  time: "${fm.weather.time}"`,
+      `  weather: ${fm.weather.weather ? '"' + fm.weather.weather + '"' : null}`,
+      `  time: ${fm.weather.time ? '"' + fm.weather.time + '"' : null}`,
       `  aqi: ${fm.weather.aqi}`,
       '---',
       ''
@@ -174,6 +174,6 @@ export class Generator {
 
   private async _genMarkdownFile(): Promise<void> {
     const filePath = LibPath.join(this._postDir, this._result.frontmatter.slug + '.md');
-    await LibFs.writeFile(filePath, this._frontmatter + '\n' + this._markdown + '\n' + this._tags);
+    await LibFs.writeFile(filePath, this._frontmatter + '\n' + this._markdown + '\n\n' + this._tags);
   }
 }

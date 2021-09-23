@@ -61,17 +61,17 @@ export default class MarkdownHandler extends Handler {
   }
 
   private _genSlugFromTitle(title: string): string {
-    const connectWithDash = function (str: string): string {
-      return str.replace(/\s+/g, '-');
+    const formatSlug = function (str: string): string {
+      return str.replace(/\/+/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
     };
     if (!isStringContainsCn(title)) {
-      return connectWithDash(title.toLowerCase());
+      return formatSlug(title.toLowerCase());
     }
     if (this._mapping.has(title)) {
       return this._mapping.get(title);
     }
     console.log(`UNEXPECTED: No slug mapping found for title: ${title}`);
-    return connectWithDash(title.toLowerCase());
+    return formatSlug(title.toLowerCase());
   }
 
   private _saveMarkdownParagraph(type: ResMarkdownParagraphType, content: ResMarkdownParagraphContent): void {
